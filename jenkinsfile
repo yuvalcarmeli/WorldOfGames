@@ -11,7 +11,8 @@ pipeline{
 
         stage('Run python'){
             steps{
-                sh 'python gitproject.py'
+                withEnv(["PATH+PYTHON=/path/to/python"]) {
+                    sh 'python gitproject.py'
             }
         }
     }
