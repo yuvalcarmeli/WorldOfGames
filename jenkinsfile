@@ -11,7 +11,7 @@ pipeline{
 
         stage('Run python'){
             steps{
-                sh 'python3 gitproject.py'
+                sh 'python gitproject.py'
             }
         }
     }
