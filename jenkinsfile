@@ -11,7 +11,7 @@ pipeline{
 
         stage('run pytone'){
             steps{
-                sh 'phyton gitproject.py'
+                sh 'python gitproject.py'
             }
         }
     }
