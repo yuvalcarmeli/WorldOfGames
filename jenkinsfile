@@ -9,7 +9,7 @@ pipeline{
             }
         }
 
-        stage('run pytone'){
+        stage('Run python'){
             steps{
                 sh 'python gitproject.py'
             }
