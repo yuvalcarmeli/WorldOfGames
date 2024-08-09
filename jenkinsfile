@@ -1,0 +1,18 @@
+properties([parameters([string(defaultValue: 'aws-us', name: 'DISK_NAME'), string(defaultValue: 'machine', name: 'MACHINE_NAME'), string(defaultValue: '1000', name: 'TARGET_GB')])])
+pipeline{
+    agent any
+
+    stages{
+        stage('checkout'){
+            steps{
+                git branch: 'master' , url: "https://github.com/yuvalcarmeli/gitproject1.git"
+            }
+        }
+
+        stage('run pytone'){
+            steps{
+                sh 'phyton gitproject.py'
+            }
+        }
+    }
+}
