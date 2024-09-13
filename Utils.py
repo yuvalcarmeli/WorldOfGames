@@ -1,7 +1,7 @@
 import os
 import platform
 
-SCORES_FILE_NAME = "/Scores.txt"
+SCORES_FILE_NAME = "Scores.txt"
 
 BAD_RETURN_CODE=-1
 
