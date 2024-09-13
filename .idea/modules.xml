@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/WorldOfGames.iml" filepath="$PROJECT_DIR$/.idea/WorldOfGames.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../devops course/.idea/devops course.iml" filepath="$PROJECT_DIR$/../devops course/.idea/devops course.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../gitproject/.idea/gitproject.iml" filepath="$PROJECT_DIR$/../gitproject/.idea/gitproject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../tip_calc_orig/.idea/tip_calc_orig.iml" filepath="$PROJECT_DIR$/../tip_calc_orig/.idea/tip_calc_orig.iml" />
+    </modules>
+  </component>
+</project>
