@@ -12,7 +12,7 @@ services:
     volumes:
       - ./Scores.txt:/Scores.txt
 
- jenkins:
+  jenkins:
     image: jenkins/jenkins:lts
     user: root
     ports:
