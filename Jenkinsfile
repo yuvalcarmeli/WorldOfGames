@@ -1,21 +1,40 @@
 pipeline {
     agent any
 
-    environment {
-        DOCKER_IMAGE = 'yuvalcarmeli/flask_project:latest'
-    }
-
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
+               git branch: 'master', url: 'https://github.com/yuvalcarmeli/WorldOfGames.git'
             }
         }
 
         stage('Build') {
             steps {
                 script {
-                    docker.build("${env.DOCKER_USERNAME}/flask_project:latest")
+                    sh 'docker-compose build'
+                }
+            }
+        }
+        stage('Run') {
+            steps {
+                script {
+                    def containerName = "worldofgames-web-1"
+                    def command = "docker ps -f name=${containerName} -a"
+                    def commandOutput = sh(script: command, returnStdout: true).trim()
+                    echo "Command: ${command}"
+                    echo "Output: ${commandOutput}"
+
+                    def isRunning = sh(script: "docker ps -q -f name=${containerName}", returnStdout: true).trim()
+                    if (isRunning) {
+                        echo "Container ${containerName} is running."
+                        sh 'docker-compose down'
+                    } else {
+                        echo "Container ${containerName} is not running."
+                    }
+                    sh 'docker-compose up -d'
+                }
+                script {
+                    sleep 15
                 }
             }
         }
@@ -23,38 +42,32 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    docker.image("${env.DOCKER_USERNAME}/flask-app:latest").inside {
-                        sh 'pip install pytest'
-                        sh 'pytest'
+                    try {
+                       sh 'python3 e2e.py'
+                    }
+                    catch (Exception e) {
+                       echo "Test failed: ${e}"
+                       currentBuild.result = 'FAILURE'
+                       throw e
                     }
                 }
             }
         }
 
-        stage('Login to Docker Hub') {
-            steps {
-                script {
-                    sh "echo ${env.DOCKER_PASSWORD} | docker login -u ${env.DOCKER_USERNAME} --password-stdin"
+        stage('Finalize') {
+            when {
+                expression {
+                    currentBuild.result == null || currentBuild.result == 'SUCCESS'
                 }
             }
-        }
-
-        stage('Push to Docker Hub') {
             steps {
-                script {
-                    docker.image("${env.DOCKER_USERNAME}/flask-app:latest").push('latest')
-                }
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                script {
-                    sshagent(['ssh-private-key']) {
-                        sh """
-                        ssh -o StrictHostKeyChecking=no ${env.SERVER_USER}@${env.SERVER_IP} 'docker pull ${env.DOCKER_USERNAME}/flask-app:latest && docker run -d -p 80:5000 ${env.DOCKER_USERNAME}/flask-app:latest'
-                        """
-                    }
+                withCredentials([usernamePassword(credentialsId: 'DockerHub', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_ID')])
+                {
+                    sh '''
+                    docker-compose down
+                    docker login -u $DOCKER_ID -p $DOCKER_PASSWORD
+                    docker tag yuvalcarmeli/flask_project:latest $DOCKER_ID/flask_project:latest
+                    docker push $DOCKER_ID/flask_project:latest'''
                 }
             }
         }
