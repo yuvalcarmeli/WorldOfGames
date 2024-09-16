@@ -11,16 +11,19 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    dir('test') { 
+                    dir('test') {  // Change directory to 'test'
+                        sh 'pwd'  // Confirm current directory
+                        sh 'ls -la'  // List files for verification
                         sh 'docker-compose build'
                     }
                 }
             }
         }
-       stage('Run') {
+
+        stage('Run') {
             steps {
                 script {
-                    dir('test') {  // Change to 'test' directory
+                    dir('test') {  // Change directory to 'test'
                         def containerName = "worldofgames-web-1"
                         def command = "docker ps -f name=${containerName} -a"
                         def commandOutput = sh(script: command, returnStdout: true).trim()
@@ -46,21 +49,14 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    try {
-                        dir('test') {  // Change to 'test' directory
-                            sh 'python3 e2e.py'
-                        }
-                    } catch (Exception e) {
-                        echo "Test failed: ${e}"
-                        currentBuild.result = 'FAILURE'
-                        throw e
+                    dir('test') {  // Change directory to 'test'
+                        sh 'python3 e2e.py'
                     }
                 }
             }
         }
 
-
-     stage('Finalize') {
+        stage('Finalize') {
             when {
                 expression {
                     currentBuild.result == null || currentBuild.result == 'SUCCESS'
@@ -68,7 +64,7 @@ pipeline {
             }
             steps {
                 script {
-                    dir('test') {  // Change to 'test' directory
+                    dir('test') {  // Change directory to 'test'
                         withCredentials([usernamePassword(credentialsId: 'DockerHub', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_ID')]) {
                             sh '''
                             docker-compose down
