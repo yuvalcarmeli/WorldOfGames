@@ -1,4 +1,3 @@
-
 version: '3.8'
 services:
   web:
@@ -10,4 +9,4 @@ services:
       FLASK_APP: MainScores.py
       FLASK_RUN_HOST: 0.0.0.0
     volumes:
-      - /var/jenkins_home/workspace/test/Scores.txt:/Scores.txt
+      - /var/jenkins_home/workspace/test/Scores.txt:/Scores.txt:rw
