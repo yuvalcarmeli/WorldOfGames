@@ -18,7 +18,6 @@ pipeline {
         stage('Run') {
             steps {
                 script {
-                    println Jenkins.instance.getItemByFullName('WorldOfGames').getWorkspace().getRemote()
                     def containerName = "worldofgames-web-1"
                     def command = "docker ps -f name=${containerName} -a"
                     def commandOutput = sh(script: command, returnStdout: true).trim()
