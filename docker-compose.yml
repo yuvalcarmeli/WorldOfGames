@@ -9,4 +9,4 @@ services:
       FLASK_APP: MainScores.py
       FLASK_RUN_HOST: 0.0.0.0
     volumes:
-      - C:\Users\user\Desktop\WorldOfGames/Scores.txt:/Scores.txt
+      - C:\Users\user\Desktop\WorldOfGames\Scores.txt:/Scores.txt
