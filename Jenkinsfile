@@ -65,10 +65,10 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'DockerHub', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_ID')])
                 {
                     sh '''
-                    docker-compose down
                     docker login -u $DOCKER_ID -p $DOCKER_PASSWORD
                     docker tag yuvalcarmeli/flask_project:latest $DOCKER_ID/flask_project:latest
-                    docker push $DOCKER_ID/flask_project:latest'''
+                    docker push $DOCKER_ID/flask_project:latest
+                    docker-compose down'''
                 }
             }
         }
