@@ -44,7 +44,7 @@ pipeline {
                 script {
                     dir('/var/jenkins_home/workspace/WorldOfGames/tests') {  
                         def Url = "http://host.docker.internal:8777"
-                        def exitCode = sh(script: "HTTP_HOST=${testUrl} ./venv/bin/python3 -c 'import e2e; e2e.main_function()'", returnStatus: true)
+                        def exitCode = sh(script: "HTTP_HOST=${Url} ./venv/bin/python3 -c 'import e2e; e2e.main_function()'", returnStatus: true)
                         if (exitCode != 0) {
                             echo "Tests failed with exit code ${exitCode}"
                             currentBuild.result = 'FAILURE'  
