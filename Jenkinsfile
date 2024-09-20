@@ -47,27 +47,14 @@ pipeline {
                         if (exitCode != 0)
                             echo "Tests failed with exit code ${exitCode}"
                             currentBuild.result = 'FAILURE'  
-                            error "Test execution failed."  
+                            error "Test execution failed." 
+                            exit -1
                         } else {
                             echo "Tests passed"
                         }
                     }
                 }
             }
-        
-                script {
-                    try {
-                        cd tests
-                        sh 'python3 e2e.py'
-                    }
-                    catch (Exception e) {
-                       echo "Test failed: ${e}"
-                       currentBuild.result = 'FAILURE'
-                       throw e
-                    }
-                }
-            }
-        }
 
         stage('Finalize') {
             when {
