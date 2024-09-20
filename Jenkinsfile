@@ -42,7 +42,6 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    sh '/venv/bin/python -c "import sys; print(sys.version); print(sys.executable)"'
                     dir('/var/jenkins_home/workspace/WorldOfGames/tests') {  
                         def Url = "http://host.docker.internal:8777"
                         def exitCode = sh(script: ". /venv/bin/activate && HTTP_HOST=${Url} python -c 'import e2e; e2e.main_function()'", returnStatus: true)
