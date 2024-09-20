@@ -9,8 +9,14 @@ def score_server():
         with open(SCORES_FILE_NAME, 'r') as scoresfile:
             score=int(scoresfile.read())
         return render_template('index.html', score=score)
-    except BaseException as e:
-        error_message = f"Error reading score: {e}"
+    except FileNotFoundError as e:
+        error_message = f"Error: Score file not found: {e}"
+        return render_template('index1.html', score=error_message)
+    except ValueError as e:
+        error_message = f"Error: Invalid score value: {e}"
+        return render_template('index1.html', score=error_message)
+    except Exception as e:
+        error_message = f"An unexpected error occurred: {e}"
         return render_template('index1.html', score=error_message)
 
 if __name__ == '__main__':
