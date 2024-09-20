@@ -33,9 +33,6 @@ pipeline {
                     }
                     sh 'docker-compose up -d'
                 }
-                script {
-                    sleep 15
-                }
             }
         }
 
