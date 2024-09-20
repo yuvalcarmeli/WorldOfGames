@@ -14,5 +14,7 @@ def score_server():
         return render_template('index1.html', score=error_message)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    aapp.run(host='0.0.0.0', port=5000, debug=True)
+
+score_server()
 
