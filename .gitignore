@@ -2,5 +2,5 @@ node_modules/
 .idea/
 jenkins_home/
 Scores.txt;C/
-package-lock.json/
 package.json
+package-lock.json
