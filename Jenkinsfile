@@ -49,7 +49,8 @@ pipeline {
                             currentBuild.result = 'FAILURE'  
                             error "Test execution failed." 
                             exit -1
-                        } else {
+                        } 
+                        else {
                             echo "Tests passed"
                         }
                     }
