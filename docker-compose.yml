@@ -9,7 +9,6 @@ services:
       FLASK_APP: MainScores.py
       FLASK_RUN_HOST: 0.0.0.0
     volumes:
-      - /var/jenkins_home/workspace/WorldOfGames/:/app/
-  
+      .:/app 
       
       
