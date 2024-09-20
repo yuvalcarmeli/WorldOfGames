@@ -43,12 +43,14 @@ pipeline {
             steps {
                 script {
                     dir('/var/jenkins_home/workspace/WorldOfGames/tests') {  
-                        def exitCode = sh(script: 'python3 e2e.py', returnStatus: true)
+                        def exitCode = sh(script: """    
+                            source venv/bin/activate
+                            python3 -c 'import e2e; e2e.main_function("http://host.docker.internal:8777")'
+                        """, returnStatus: true)
                         if (exitCode != 0) {
                             echo "Tests failed with exit code ${exitCode}"
                             currentBuild.result = 'FAILURE'  
                             error "Test execution failed." 
-                            exit -1
                         } 
                         else {
                             echo "Tests passed"
