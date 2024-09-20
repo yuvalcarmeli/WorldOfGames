@@ -10,9 +10,10 @@ from time import sleep
 
 def test_scores_service(url):
     chrome_options = Options()
-    chrome_options.add_argument("--headless")  # Run in headless mode
-    chrome_options.add_argument("--no-sandbox")  # Bypass OS security model
-    chrome_options.add_argument("--disable-dev-shm-usage")  # Overcome limited resource problems
+    chrome_options.add_argument("--headless")  
+    chrome_options.add_argument("--no-sandbox")  
+    chrome_options.add_argument("--disable-dev-shm-usage")  
+    chrome_options.binary_location = '/usr/bin/google-chrome'
     driver = webdriver.Chrome(service=Service('/venv/bin/chromedriver-linux64/chromedriver'), options=chrome_options)
     try:
         driver.get(url)
