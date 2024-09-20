@@ -1,12 +1,14 @@
 from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import sys
 from time import sleep
 
 def test_scores_service(url):
-    driver = None
     chrome_options = Options()
     chrome_options.add_argument("--headless")  # Run in headless mode
     chrome_options.add_argument("--no-sandbox")  # Bypass OS security model
@@ -20,10 +22,11 @@ def test_scores_service(url):
             return True
         else:
             return False
+            
     except NoSuchElementException as e:
         print("Element not found:", e)
-    except AssertionError as e:
-        print("Assertion error:", e)
+    except TimeoutException as e:
+        print("TimeoutException error:", e)
     except Exception as e:
         print("An error occurred:", e)
     finally:
