@@ -42,8 +42,23 @@ pipeline {
         stage('Test') {
             steps {
                 script {
+                    dir('/var/jenkins_home/workspace/WorldOfGames/tests') {  
+                        def exitCode = sh(script: 'python3 e2e.py', returnStatus: true)
+                        if (exitCode != 0)
+                            echo "Tests failed with exit code ${exitCode}"
+                            currentBuild.result = 'FAILURE'  
+                            error "Test execution failed."  
+                        } else {
+                            echo "Tests passed"
+                        }
+                    }
+                }
+            }
+        
+                script {
                     try {
-                       sh 'python3 e2e.py'
+                        cd tests
+                        sh 'python3 e2e.py'
                     }
                     catch (Exception e) {
                        echo "Test failed: ${e}"
