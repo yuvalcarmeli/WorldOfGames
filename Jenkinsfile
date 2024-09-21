@@ -49,7 +49,7 @@ pipeline {
                             error "Test execution failed." 
                         } 
                         else {
-                            echo "Tests passed"
+                            echo "The test was successful"
                         }
                     }
                 }
