@@ -1,13 +1,17 @@
 import requests
 from Scores import add_score
+import random
+
 def get_money_interval(difficulty):
     url = 'https://v6.exchangerate-api.com/v6/a384ee03308df33256c0d601/latest/USD'
     response = requests.get(url)
     response.raise_for_status()
     data = response.json()
-    rate = data['conversion_rates']['ILS']
-    lower_bound = rate - 5 - difficulty
-    upper_bound = rate + 5 - difficulty
+    exchange_rate = data['conversion_rates']['ILS']
+    random_usd_amount = random.randint(1, 100)
+    converted_amount =round(random_usd_amount * exchange_rate, 2)
+    lower_bound = converted_amount - 5 - difficulty
+    upper_bound = converted_amount + 5 - difficulty
     return lower_bound , upper_bound
 
 def get_guess_from_user():
@@ -26,5 +30,4 @@ def play(difficulty):
         add_score(difficulty)
     else:
         print("False")
-
 

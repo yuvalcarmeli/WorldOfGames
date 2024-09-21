@@ -26,12 +26,11 @@ def get_list_from_user(difficulty):
 def is_list_equal(difficulty):
     random_list_number = generate_sequence(difficulty)
     print(random_list_number)
-    sleep(7)
+    sleep(0.7)
+    print("\n" * 100)
     screen_cleaner()
     user_list_number = get_list_from_user(difficulty)
     if random_list_number == user_list_number:
         add_score(difficulty)
     else:
         print("False")
-
-
