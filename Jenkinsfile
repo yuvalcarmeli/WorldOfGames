@@ -41,7 +41,6 @@ pipeline {
                 script {
                     dir('/var/jenkins_home/workspace/WorldOfGames/tests') {  
                         def url = "http://worldofgames-web-1:5000"
-                        sh "curl -f ${url}"
                         def exitCode = sh(script: ". /venv/bin/activate && HTTP_HOST=${url} python -c 'import e2e; e2e.main_function(\"${url}\")'", returnStatus: true)
                         if (exitCode != 0) {
                             echo "failed with exit code ${exitCode}"
@@ -49,7 +48,7 @@ pipeline {
                             error "Test execution failed." 
                         } 
                         else {
-                            echo "Tests passed"
+                            echo "The test was successful"
                         }
                     }
                 }
