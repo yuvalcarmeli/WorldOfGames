@@ -40,7 +40,7 @@ pipeline {
             steps {
                 script {
                     dir('/var/jenkins_home/workspace/WorldOfGames/tests') {  
-                        def url = "http://worldofgames-web-1:5000"
+                        def url = "http://worldofgames-web-1:8777"
                         def exitCode = sh(script: ". /venv/bin/activate && HTTP_HOST=${url} python -c 'import e2e; e2e.main_function(\"${url}\")'", returnStatus: true)
                         if (exitCode != 0) {
                             echo "failed with exit code ${exitCode}"
