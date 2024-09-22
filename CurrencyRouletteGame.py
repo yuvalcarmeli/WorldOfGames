@@ -10,8 +10,8 @@ def get_money_interval(difficulty):
     exchange_rate = data['conversion_rates']['ILS']
     random_usd_amount = random.randint(1, 100)
     converted_amount =round(random_usd_amount * exchange_rate, 2)
-    lower_bound = converted_amount - 5 - difficulty
-    upper_bound = converted_amount + 5 - difficulty
+    lower_bound = converted_amount - (5 - difficulty)
+    upper_bound = converted_amount + (5 - difficulty)
     return lower_bound , upper_bound
 
 def get_guess_from_user():
